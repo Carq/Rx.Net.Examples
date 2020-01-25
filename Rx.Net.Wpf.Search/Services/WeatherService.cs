@@ -26,7 +26,17 @@ namespace Rx.Net.Wpf.Search.Services
 
         public async Task<WeatherAvailability> IsWeatherAvailableAsync(string cityName)
         {
-            await Task.Delay(100);
+            await Task.Delay(50);
+            if (_availableCities.Any(x => string.Equals(x.Name, cityName, System.StringComparison.OrdinalIgnoreCase)))
+            {
+                return WeatherAvailability.Available;
+            }
+
+            return WeatherAvailability.NotAvailable;
+        }
+
+        public WeatherAvailability IsWeatherAvailable(string cityName)
+        {
             if (_availableCities.Any(x => string.Equals(x.Name, cityName, System.StringComparison.OrdinalIgnoreCase)))
             {
                 return WeatherAvailability.Available;

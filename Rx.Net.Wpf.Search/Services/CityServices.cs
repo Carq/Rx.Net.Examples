@@ -14,6 +14,11 @@ namespace Rx.Net.Wpf.Search.Services
 
         public async Task<string[]> SearchCitiesAsync(string searchPhase)
         {
+            if (string.IsNullOrEmpty(searchPhase))
+            {
+                return await LoadCitiesAsync();
+            }
+
             return (await File.ReadAllLinesAsync("Data/PolishCities.txt")).Where(x => x.Contains(searchPhase, StringComparison.OrdinalIgnoreCase)).ToArray();
         }
     }

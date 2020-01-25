@@ -15,31 +15,47 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <TextBox
             x:Name="TextBox"
             Margin="5"
             Controls:TextBoxHelper.Watermark="Type and hit Enter"
-            KeyUp="TextBoxOnKeyUp"
             Text="warsza" />
+
         <Controls:ProgressRing
             x:Name="ProgressRing"
             Grid.Column="1"
             Width="30"
             Height="30"
-            
             IsActive="False" />
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <Button
+                Width="100"
+                Margin="5"
+                Click="ButtonNormalOnClick"
+                Content="Normal" />
+            <Button
+                Width="100"
+                Margin="5"
+                Click="ButtonReacativeOnClick"
+                Content="Reactive" />
+        </StackPanel>
+
         <DataGrid
             x:Name="DataGrid"
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
             Margin="5"
             AlternationCount="2"
             AutoGenerateColumns="False"
@@ -86,5 +102,11 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Label Content="Time: " />
+            <Label x:Name="Time" />
+            <Label x:Name="Count" />
+        </StackPanel>
+
     </Grid>
 </Controls:MetroContentControl>

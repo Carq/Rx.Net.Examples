@@ -1,9 +1,12 @@
 ﻿using MahApps.Metro.Controls;
+using Rx.Net.Wpf.Search.Helpers;
+using Rx.Net.Wpf.Search.RxServices;
 using Rx.Net.Wpf.Search.Services;
 using Rx.Net.Wpf.Search.Services.DataPackages;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Reactive.Linq;
 using System.Windows.Controls;
 
 namespace Rx.Net.Wpf.Search.ReactiveServiceExample
@@ -35,18 +38,55 @@ namespace Rx.Net.Wpf.Search.ReactiveServiceExample
             }
         }
 
-        private async void TextBoxOnKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void DisplayCount()
         {
-            if (e.Key != System.Windows.Input.Key.Enter)
+            Count.Content = $"({CitiesWithWeather.Count})";
+        }
+
+        private async void ButtonNormalOnClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ProgressRing.IsActive = true;
+            CitiesWithWeather.Clear();
+            DisplayCount();
+
+            using (new Stoper(Time))
             {
-                return;
+                var result = await _cityWeatherService.SearchCityAndLoadWeatherInfo(TextBox.Text);
+                DisplayData(result);
             }
 
-            ProgressRing.IsActive = true;
-            var result = await Dispatcher.Invoke(async () => await _cityWeatherService.SearchCityAndDisplayWeather(TextBox.Text));
-            DisplayData(result);
+            DisplayCount();
             ProgressRing.IsActive = false;
-           
+        }
+
+        private void ButtonReacativeOnClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var cityWeatherRxService = new CityWeatherRxService();
+            
+            CitiesWithWeather.Clear();
+            DisplayCount();
+
+            var stoper = new Stoper(Time);
+
+            cityWeatherRxService
+                .SearchCityAndLoadWeatherInfo(TextBox.Text)
+                .Buffer(TimeSpan.FromSeconds(2))
+                .ObserveOnDispatcher()
+                .Subscribe(
+                x =>
+                {
+                    foreach (var item in x)
+                    {
+                        CitiesWithWeather.Add(item);
+                    }
+
+                    DisplayCount();
+                },
+                () =>
+                {
+                    stoper.Dispose();
+                    DisplayCount();
+                });
         }
     }
 }

@@ -6,13 +6,13 @@ namespace Rx.Net.Wpf.Search.Services
 {
     public class CityWeatherService
     {
-        private const int MaxRequestsForWeather = 10;
+        private const int MaxRequestsForWeather = Consts.MaxRequestsPerSearch;
 
         private readonly CityService _cityService = new CityService();
 
         private readonly WeatherService _weatherService = new WeatherService();
 
-        public async Task<IList<CityWithWeatherInfo>> SearchCityAndDisplayWeather(string searchPhase)
+        public async Task<IList<CityWithWeatherInfo>> SearchCityAndLoadWeatherInfo(string searchPhase)
         {
             var cities = await _cityService.SearchCitiesAsync(searchPhase);
             var citiesWithWeather = new List<CityWithWeatherInfo>();
@@ -20,7 +20,7 @@ namespace Rx.Net.Wpf.Search.Services
 
             foreach (var city in cities)
             {
-                var weatherAvailability = await _weatherService.IsWeatherAvailableAsync(city);
+                var weatherAvailability = _weatherService.IsWeatherAvailable(city);
                 if (weatherAvailability == WeatherAvailability.Available)
                 {
                     if (requestsMade++ < MaxRequestsForWeather )
