@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rx.Net.Examples", "Rx.Net.WebApi\Rx.Net.Examples.csproj", "{53C976F2-0A10-4DB1-8888-1439EA53B93A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rx.Net.Wpf.Search", "Rx.Net.Wpf.Search\Rx.Net.Wpf.Search.csproj", "{19A98F99-5ACD-4726-8292-1430AD415B29}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53C976F2-0A10-4DB1-8888-1439EA53B93A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C976F2-0A10-4DB1-8888-1439EA53B93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53C976F2-0A10-4DB1-8888-1439EA53B93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53C976F2-0A10-4DB1-8888-1439EA53B93A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A98F99-5ACD-4726-8292-1430AD415B29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A98F99-5ACD-4726-8292-1430AD415B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A98F99-5ACD-4726-8292-1430AD415B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A98F99-5ACD-4726-8292-1430AD415B29}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A83650E7-E46F-4BBF-B340-2B4C3B116C1B}
+	EndGlobalSection
+EndGlobal
