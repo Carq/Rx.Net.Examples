@@ -35,16 +35,6 @@ namespace Rx.Net.Wpf.Search.Services
             return WeatherAvailability.NotAvailable;
         }
 
-        public WeatherAvailability IsWeatherAvailable(string cityName)
-        {
-            if (_availableCities.Any(x => string.Equals(x.Name, cityName, System.StringComparison.OrdinalIgnoreCase)))
-            {
-                return WeatherAvailability.Available;
-            }
-
-            return WeatherAvailability.NotAvailable;
-        }
-
         public async Task<WeatherInfo> GetWeatherAsync(string cityName)
         {
             var cityId = _availableCities.First(x => string.Equals(x.Name, cityName, System.StringComparison.OrdinalIgnoreCase)).Id;

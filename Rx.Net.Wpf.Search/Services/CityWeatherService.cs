@@ -20,7 +20,7 @@ namespace Rx.Net.Wpf.Search.Services
 
             foreach (var city in cities)
             {
-                var weatherAvailability = _weatherService.IsWeatherAvailable(city);
+                var weatherAvailability = await _weatherService.IsWeatherAvailableAsync(city);
                 if (weatherAvailability == WeatherAvailability.Available)
                 {
                     if (requestsMade++ < MaxRequestsForWeather )

@@ -14,8 +14,7 @@ namespace Rx.Net.Wpf.Search.RxServices
         {
             return _cityRxServices
               .SearchCities(searchPhase)
-                .Select(city => _weatherRxService.LoadWeatherInfoRx(city))
-                //.Select(city => cityWeatherRxService.LoadWeatherInfoAsync(city).ToObservable())
+                .Select(city => _weatherRxService.LoadWeatherInfoRxAsync(city))
                 .Merge();
         }
     }

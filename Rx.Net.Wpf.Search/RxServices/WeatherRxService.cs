@@ -18,7 +18,7 @@ namespace Rx.Net.Wpf.Search.RxServices
         {
             return Observable.Create<CityWithWeatherInfo>(async observer =>
             {
-                var weatherAvailability = _weatherService.IsWeatherAvailable(city);
+                var weatherAvailability = await _weatherService.IsWeatherAvailableAsync(city);
                 if (weatherAvailability == WeatherAvailability.Available)
                 {
                     if (_requests++ < MaxRequestsForWeather)
@@ -38,9 +38,33 @@ namespace Rx.Net.Wpf.Search.RxServices
             });
         }
 
+        public IObservable<CityWithWeatherInfo> LoadWeatherInfoRxAsync(string city)
+        {
+            return Observable.FromAsync(async observer =>
+            {
+                var weatherAvailability = await _weatherService.IsWeatherAvailableAsync(city);
+                if (weatherAvailability == WeatherAvailability.Available)
+                {
+                    if (_requests++ < MaxRequestsForWeather)
+                    {
+                        var info = await _weatherService.GetWeatherAsync(city);
+                        return new CityWithWeatherInfo(city, info);
+                    }
+                    else
+                    {
+                        return new CityWithWeatherInfo(city, WeatherAvailability.TemporaryNotAvailable);
+                    }
+                }
+                else
+                {
+                    return new CityWithWeatherInfo(city, WeatherAvailability.NotAvailable);
+                }
+            });
+        }
+
         public async Task<CityWithWeatherInfo> LoadWeatherInfoAsync(string city)
         {
-            var weatherAvailability = _weatherService.IsWeatherAvailable(city);
+            var weatherAvailability = await _weatherService.IsWeatherAvailableAsync(city);
             if (weatherAvailability == WeatherAvailability.Available)
             {
                 var info = await _weatherService.GetWeatherAsync(city);
